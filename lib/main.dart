@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-// testing GitHub integration
+// Testing Commit and Push
 
 void main() {
   runApp(const PortfolioApp());
