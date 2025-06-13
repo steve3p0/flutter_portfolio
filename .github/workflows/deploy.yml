@@ -1,25 +1,24 @@
 name: Deploy Flutter Web to GitHub Pages
 
 on:
-  # Trigger the workflow on push events to the main branch
   push:
     branches: [ master ]
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
   build-and-deploy:
+    # ADD THESE TWO LINES TO GRANT PERMISSION
+    permissions:
+      contents: write
+
     runs-on: ubuntu-latest
     steps:
-      # Checks out a copy of your repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Automatically gets the repository name (flutter_portfolio)
       - name: Set repository name variable
         run: echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
 
-      # Sets up the Flutter SDK
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -28,11 +27,9 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Builds the web app for release, using the repo name for the base path
       - name: Build Flutter Web
         run: flutter build web --release --base-href /${{ env.REPO_NAME }}/
 
-      # Deploys the built app (from the build/web folder) to the gh-pages branch
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
